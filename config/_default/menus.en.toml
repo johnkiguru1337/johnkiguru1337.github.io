@@ -1,0 +1,106 @@
+# -- Main Menu --
+# The main menu is displayed in the header at the top of the page.
+# Acceptable parameters are name, pageRef, page, url, title, weight.
+# 
+# The simplest menu configuration is to provide:
+#   name = The name to be displayed for this menu link
+#   pageRef = The identifier of the page or section to link to
+#
+# By default the menu is ordered alphabetically. This can be
+# overridden by providing a weight value. The menu will then be
+# ordered by weight from lowest to highest.
+
+[[main]]
+  name = "About"
+  weight = 10
+  pageRef = "about"
+  
+[[main]]
+  name = "Medium Blog"
+  weight = 200
+
+[[main]]
+  parent = "Medium Blog"
+  name = "Visit"
+  url = "https://trustie.medium.com"
+  weight = 2
+
+[[main]]
+  name = "About the Blog"
+  parent = "Medium Blog"
+  pageRef = "about-medium-blog"
+  weight = 2 
+[[main]]
+  name = "Cheatsheets"
+  weight = 100
+
+[[main]]
+  parent = "Cheatsheets"
+  name = "Windows"
+  pageRef = "windows-cheatsheet"
+  weight = 2
+
+[[main]]
+  name = "Linux"
+  parent = "Cheatsheets"
+  pageRef = "linux-cheatsheet"
+  weight = 2 
+
+
+[[main]]
+  name = "Blog"
+  pageRef = "posts"
+  weight = 50
+
+#[[main]]
+#  name = "Parent"
+#  weight = 20
+
+#[[main]]
+#  name = "example sub-menu 1"
+#  parent = "Parent"
+#  pageRef = "posts"
+#  weight = 20
+
+#[[main]]
+#  name = "example sub-menu 2"
+#  parent = "Parent"
+#  pageRef = "posts"
+#  weight = 20
+
+#[[subnavigation]]
+#  name = "An interesting topic"
+#  pageRef = "tags/interesting-topic"
+#  weight = 10
+
+#[[subnavigation]]
+#  name = "My Awesome Category"
+#  pre = "github"
+#  pageRef = "categories/awesome"
+#  weight = 20
+
+#[[main]]
+#  name = "Categories"
+#  pageRef = "categories"
+#  weight = 20
+
+#[[main]]
+#  name = "Tags"
+#  pageRef = "tags"
+#  weight = 30
+
+
+# -- Footer Menu --
+# The footer menu is displayed at the bottom of the page, just before
+# the copyright notice. Configure as per the main menu above.
+
+
+[[footer]]
+   name = "Tags"
+   pageRef = "tags"
+   weight = 10
+
+# [[footer]]
+#   name = "Categories"
+#   pageRef = "categories"
+#   weight = 20
