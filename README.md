@@ -1,1 +1,0 @@
-# jkiguru.github.io
