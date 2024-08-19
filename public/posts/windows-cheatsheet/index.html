@@ -104,7 +104,7 @@
     "keywords": ["windows","cheatsheet"],
     
     "mainEntityOfPage": "true",
-    "wordCount": "96"
+    "wordCount": "260"
   }]
   </script>
 
@@ -655,7 +655,7 @@
 
     
     <div class="fixed inset-x-0 top-0 h-[800px] single_hero_background nozoom"
-    style="background-image:url(/posts/windows-cheatsheet/feature_hufec0776f085bddf4a11f59da39bb687e_35508_1200x0_resize_box_3.png);">
+    style="background-image:url(/posts/windows-cheatsheet/feature_hu4092800953346848306.png);">
     
 
 
@@ -732,7 +732,7 @@
 <div class="flex flex-row flex-wrap items-center">
   
   
-  <time datetime="2024-07-31 00:00:00 &#43;0000 UTC">31 July 2024</time><span class="px-2 text-primary-500">&middot;</span><span>96 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">1 min</span><span class="px-2 text-primary-500">&middot;</span><span>
+  <time datetime="2024-07-31 00:00:00 &#43;0000 UTC">31 July 2024</time><span class="px-2 text-primary-500">&middot;</span><span>260 words</span><span class="px-2 text-primary-500">&middot;</span><span title="Reading time">2 mins</span><span class="px-2 text-primary-500">&middot;</span><span>
   
   
     
@@ -877,7 +877,12 @@
     class="min-w-[220px] py-2 border-dotted ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#windows">Windows</a></li>
+    <li><a href="#windows">Windows</a>
+      <ul>
+        <li><a href="#helpful-points">Helpful Points</a></li>
+        <li><a href="#tricks">Tricks</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
@@ -891,7 +896,12 @@
     class="py-2 border-dotted border-neutral-300 ltr:-ml-5 ltr:border-l ltr:pl-5 rtl:-mr-5 rtl:border-r rtl:pr-5 dark:border-neutral-600">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#windows">Windows</a></li>
+    <li><a href="#windows">Windows</a>
+      <ul>
+        <li><a href="#helpful-points">Helpful Points</a></li>
+        <li><a href="#tricks">Tricks</a></li>
+      </ul>
+    </li>
   </ul>
 </nav>
   </div>
@@ -987,7 +997,38 @@
     </span>        
     
 </h2>
-<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nibh nisl, vulputate eu lacus vitae, maximus molestie libero. Vestibulum laoreet, odio et sollicitudin sollicitudin, quam ligula tempus urna, sed sagittis eros eros ac felis. In tristique tortor vitae lacinia commodo. Mauris venenatis ultrices purus nec fermentum. Nunc sit amet aliquet metus. Morbi nisl felis, gravida ac consequat vitae, blandit eu libero. Curabitur porta est in dui elementum porttitor. Maecenas fermentum, tortor ac feugiat fringilla, orci sem sagittis massa, a congue risus ipsum vel massa. Aliquam sit amet nunc vulputate, facilisis neque in, faucibus nisl.</p>
+<p>In most <code>corporate environments</code>, you will find extensive usage of Windows Microsoft Operating System. It is barely inevitable to miss this operating system during a security assessment. Most <code>Unix-Oses</code> are used for server operations while <code>Windows</code> is used for day to day operations.</p>
+
+
+<h3 class="relative group">Helpful Points 
+    <div id="helpful-points" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#helpful-points" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<p>For Domain-level Security, a server, be it smb or ftp acts as a member of a <code>windows domain</code>. Each domain has at least one <code>domain controller</code> usually windows NT server providing password authentication. The <code>DC</code> Provides the <code>workgroup</code> with a definitive password server. The <code>DCs</code> keep track of users and passwords in their own <code>NTDS.dit</code> and <code>Security Authentication Module</code> (SAM) and authenticate each user when they log in for the first time and wish to access another machine&rsquo;s share.</p>
+<p>All the secrets in an Active Directory Environment are stored in <code>NTDS.dit</code> file, We can use it to carry out a <code>DCSync</code> attack.</p>
+<p>If you found a <code>bi-directional parent-child trust</code>, one way you would abuse it, is the using <code>Golden-ticket attack</code>.</p>
+
+
+<h3 class="relative group">Tricks 
+    <div id="tricks" class="anchor"></div>
+    
+    <span
+        class="absolute top-0 w-6 transition-opacity opacity-0 ltr:-left-6 rtl:-right-6 not-prose group-hover:opacity-100">
+        <a class="group-hover:text-primary-300 dark:group-hover:text-neutral-700"
+            style="text-decoration-line: none !important;" href="#tricks" aria-label="Anchor">#</a>
+    </span>        
+    
+</h3>
+<ul>
+<li>At times Tools will fail in a windows reverse shell or remote session. In this case you can try get another shell and try the tool again. What can I say at times Windows is <code>Weird!</code></li>
+<li>Running <code>Windows Powershell</code> exist as a default rule in most modern EDRs. It is almost inevitable for an EDR to miss you when you execute <code>powershell</code>. Instead windows <code>cmd</code> is a little bit safer and stealthier since, EDR won&rsquo;t really know whether the process is malicious not until it inspects the commands being issued.</li>
+</ul>
 
         </div>
         
@@ -1007,7 +1048,7 @@
         
       
       <img class="!mt-0 !mb-0 h-24 w-24 rounded-full ltr:mr-4 rtl:ml-4" width="96" height="96"
-      alt="Trustie Rity" src="/my-dp_huf0580f64cb45c53cd5775302ffb43196_317862_192x192_fill_box_center_3.png" />
+      alt="Trustie Rity" src="/my-dp_hu10614268441589457447.png" />
     
   
   <div class="place-self-center">
@@ -1320,7 +1361,7 @@
     
     <div class="min-h-full border border-neutral-200 dark:border-neutral-700 border-2 rounded overflow-hidden shadow-2xl relative">
         
-        <div class="w-full thumbnail_card_related nozoom" style="background-image:url(/posts/linux-cheatsheet/feature_hu4e907d1e8d164fd889e19990d00fab97_13832_600x0_resize_box_3.png);"></div>
+        <div class="w-full thumbnail_card_related nozoom" style="background-image:url(/posts/linux-cheatsheet/feature_hu387838976664314436.png);"></div>
         
       
 
@@ -1489,7 +1530,7 @@
     
     <div class="min-h-full border border-neutral-200 dark:border-neutral-700 border-2 rounded overflow-hidden shadow-2xl relative">
         
-        <div class="w-full thumbnail_card_related nozoom" style="background-image:url(/posts/srop/feature_hu723115c4f74a0f328805f4395dcd0fde_49498_600x0_resize_box_3.png);"></div>
+        <div class="w-full thumbnail_card_related nozoom" style="background-image:url(/posts/srop/feature_hu17705259707721262548.png);"></div>
         
       
 
@@ -1650,7 +1691,7 @@
     
     <div class="min-h-full border border-neutral-200 dark:border-neutral-700 border-2 rounded overflow-hidden shadow-2xl relative">
         
-        <div class="w-full thumbnail_card_related nozoom" style="background-image:url(/posts/about-medium-blog/featured_hu42856c343c12c2ae89c76ff4c9378d0d_271698_600x0_resize_q75_box.jpg);"></div>
+        <div class="w-full thumbnail_card_related nozoom" style="background-image:url(/posts/about-medium-blog/featured_hu2720911310242145335.jpg);"></div>
         
       
 
