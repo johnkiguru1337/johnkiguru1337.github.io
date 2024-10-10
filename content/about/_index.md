@@ -30,7 +30,7 @@ I am the one you've been looking for, like a bug in your code! I recently came a
 ## ~/Certifications$
 
 ### 2024
- * [ ] Coming soon.
+ * [x] HTB Certified Penetration Testing Specialitst (CPTS) - HackTheBox.
 
 ### 2023
 

